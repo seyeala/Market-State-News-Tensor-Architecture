@@ -1,3 +1,4 @@
+import math
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -30,7 +31,34 @@ def make_bar(idx: int, close: float | None = None) -> MarketBar:
 
 
 def test_compute_log_price_uses_mid_when_quotes_available() -> None:
-    assert compute_log_price(100, bid=99, ask=101) == pytest.approx(0.0 + __import__("math").log(100))
+    assert compute_log_price(100, bid=99, ask=101) == pytest.approx(math.log(100))
+
+
+def test_compute_log_price_falls_back_to_close_when_quotes_are_missing() -> None:
+    assert compute_log_price(123.45) == pytest.approx(math.log(123.45))
+    assert compute_log_price(123.45, bid=123.00) == pytest.approx(math.log(123.45))
+    assert compute_log_price(123.45, ask=124.00) == pytest.approx(math.log(123.45))
+
+
+def test_compute_log_price_rejects_non_positive_close_values() -> None:
+    with pytest.raises(ValueError, match="close must be positive"):
+        compute_log_price(0.0)
+
+    with pytest.raises(ValueError, match="close must be positive"):
+        compute_log_price(-1.0, bid=99.0)
+
+
+def test_compute_log_price_rejects_non_positive_bid_ask_values() -> None:
+    with pytest.raises(ValueError, match="bid and ask must be positive"):
+        compute_log_price(100.0, bid=0.0, ask=101.0)
+
+    with pytest.raises(ValueError, match="bid and ask must be positive"):
+        compute_log_price(100.0, bid=99.0, ask=-1.0)
+
+
+def test_compute_log_price_rejects_crossed_quotes() -> None:
+    with pytest.raises(ValueError, match="ask must be greater than or equal to bid"):
+        compute_log_price(100.0, bid=101.0, ask=100.0)
 
 
 def test_build_market_feature_rows_uses_past_returns_only() -> None:
