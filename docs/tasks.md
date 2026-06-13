@@ -2,9 +2,58 @@
 
 This backlog turns the architecture report into implementation tasks. Tasks are ordered by dependency so the project can move from a leakage-safe research scaffold to a cost-aware trading-model validation system.
 
+## Implementation Status
+
+| Task ID | Title | Status | Module Path | Notes |
+| --- | --- | --- | --- | --- |
+| TASK-001 | Create Python project scaffold | ✅ Complete | `pyproject.toml`; `src/market_state_news_tensor/`; `tests/` | Package metadata, source layout, module folders, and pytest discovery are present. |
+| TASK-002 | Write implementation-oriented README | ✅ Complete | `README.md` | README describes project purpose, MVP workflow, status, and safety language. |
+| TASK-003 | Create operational documentation stubs | ✅ Complete | `docs/` | Architecture, data contract, labeling, events, validation, and governance docs exist. |
+| TASK-004 | Define market bar schema | ✅ Complete | `src/market_state_news_tensor/schemas/market.py` | `MarketBar` validates prices, volume, bar ordering, VWAP, and availability. |
+| TASK-005 | Define quote schema | ✅ Complete | `src/market_state_news_tensor/schemas/market.py` | `QuoteBar` validates bid/ask fields and provides mid-price and proportional spread helpers. |
+| TASK-006 | Define raw news item schema | ✅ Complete | `src/market_state_news_tensor/schemas/events.py` | `RawNewsItem` captures point-in-time news timestamps and requires headline or body. |
+| TASK-007 | Define ex-ante event object schema | ✅ Complete | `src/market_state_news_tensor/schemas/events.py` | `EventObject` bounds ex-ante scores, requires evidence, and blocks ex-post metadata fields. |
+| TASK-008 | Define ex-post event outcome schema | ✅ Complete | `src/market_state_news_tensor/schemas/events.py` | `EventOutcome` stores event-study returns, volume/volatility changes, reversal, and availability. |
+| TASK-009 | Define feature row and label schemas | ✅ Complete | `src/market_state_news_tensor/schemas/labels.py` | Feature rows plus fixed-horizon and triple-barrier label schemas preserve label windows. |
+| TASK-010 | Implement point-in-time validity utilities | ✅ Complete | `src/market_state_news_tensor/data/point_in_time.py` | Availability filtering and ex-post field guards are implemented and tested. |
+| TASK-011 | Implement log-price selection | ✅ Complete | `src/market_state_news_tensor/features/market.py` | Log-price helper uses valid quote mid-prices and falls back to close prices. |
+| TASK-012 | Implement intraday market feature rows | ✅ Complete | `src/market_state_news_tensor/features/market.py` | Intraday return, volatility, range, volume, VWAP, spread, and time-of-day features are implemented. |
+| TASK-013 | Build rolling market tensor | ✅ Complete | `src/market_state_news_tensor/features/market.py` | Rolling market tensor builder enforces decision-time and availability cutoffs with optional padding. |
+| TASK-014 | Implement daily context features | ⏳ Pending | `src/market_state_news_tensor/features/context.py` (planned) | No daily context feature builder is present yet. |
+| TASK-015 | Implement weekly and monthly context features | ⏳ Pending | `src/market_state_news_tensor/features/context.py` (planned) | No weekly/monthly context feature builder or context vector is present yet. |
+| TASK-016 | Implement cost model | ✅ Complete | `src/market_state_news_tensor/validation/costs.py` | Cost model computes non-negative return-unit costs with spread, fees, slippage, expected impact, and square-root impact. |
+| TASK-017 | Implement fixed-horizon return labels | ✅ Complete | `src/market_state_news_tensor/labels/fixed_horizon.py` | Future-return labels are generated with explicit label start/end windows. |
+| TASK-018 | Implement fixed-horizon trading class labels | ✅ Complete | `src/market_state_news_tensor/labels/fixed_horizon.py` | Fixed-horizon labels are classed using cost and volatility thresholds with metadata. |
+| TASK-019 | Implement triple-barrier labels | ✅ Complete | `src/market_state_news_tensor/labels/triple_barrier.py` | Triple-barrier labels cover first touch, vertical expiry, barriers, and label windows. |
+| TASK-020 | Implement point-in-time tradable universe | ⏳ Pending | `src/market_state_news_tensor/data/universe.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-021 | Define event ontologies and rulebooks | ⏳ Pending | `src/market_state_news_tensor/events/ontology.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-022 | Implement manual event loader and extractor interface | ⏳ Pending | `src/market_state_news_tensor/events/loaders.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-023 | Implement staleness and deduplication | ⏳ Pending | `src/market_state_news_tensor/events/deduplication.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-024 | Implement state tensor schema and update logic | ⏳ Pending | `src/market_state_news_tensor/events/state_tensor.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-025 | Implement contradiction and reliability gates | ⏳ Pending | `src/market_state_news_tensor/events/reliability.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-026 | Implement event-study outcome table | ⏳ Pending | `src/market_state_news_tensor/events/outcomes.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-027 | Implement market reaction vectors | ⏳ Pending | `src/market_state_news_tensor/events/reactions.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-028 | Implement Bayesian market-belief filter | ⏳ Pending | `src/market_state_news_tensor/belief/filter.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-029 | Implement user opinion and disagreement layer | ⏳ Pending | `src/market_state_news_tensor/belief/opinion.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-030 | Build complete feature payload | ⏳ Pending | `src/market_state_news_tensor/features/payload.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-031 | Implement baseline models | ⏳ Pending | `src/market_state_news_tensor/models/baselines.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-032 | Implement GBM model wrappers | ⏳ Pending | `src/market_state_news_tensor/models/gbm.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-033 | Implement probability calibration | ⏳ Pending | `src/market_state_news_tensor/models/calibration.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-034 | Implement execution policy and expected value layer | ⏳ Pending | `src/market_state_news_tensor/validation/execution.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-035 | Implement walk-forward splitter | ⏳ Pending | `src/market_state_news_tensor/validation/splitting.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-036 | Implement purging and embargo | ⏳ Pending | `src/market_state_news_tensor/validation/purging.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-037 | Implement validation runner and metrics | ⏳ Pending | `src/market_state_news_tensor/validation/runner.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-038 | Implement experiment ledger | ⏳ Pending | `src/market_state_news_tensor/experiments/ledger.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-039 | Implement ablation framework | ⏳ Pending | `src/market_state_news_tensor/experiments/ablation.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-040 | Add anti-overfit controls | ⏳ Pending | `src/market_state_news_tensor/experiments/overfit.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-041 | Add CLI entrypoint | ⏳ Pending | `src/market_state_news_tensor/cli.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-042 | Add example scripts | ⏳ Pending | `examples/` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+| TASK-043 | Implement optional neural sequence encoders | ⏳ Pending | `src/market_state_news_tensor/models/neural.py` (planned) | Backlog item not implemented in source yet; keep pending until module and tests are added. |
+
+
 ## Milestone 1: Project Foundation
 
-### TASK-001: Create Python project scaffold
+### TASK-001: Create Python project scaffold — ✅ Complete
 - **Goal:** Establish a package structure for implementation and tests.
 - **Steps:**
   1. Add `pyproject.toml` with package metadata, Python version, and test dependencies.
@@ -13,7 +62,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   4. Create a `tests/` directory with placeholder test files.
 - **Acceptance criteria:** The package imports successfully, `pytest` discovers tests, and the repository has a clear source/test layout.
 
-### TASK-002: Write implementation-oriented README
+### TASK-002: Write implementation-oriented README — ✅ Complete
 - **Goal:** Explain what the repository builds and how to run the first workflows.
 - **Steps:**
   1. Summarize the market-state/news-tensor architecture.
@@ -21,7 +70,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Include non-advice disclaimer language.
 - **Acceptance criteria:** A new contributor can understand the project purpose, first commands, and safety constraints.
 
-### TASK-003: Create operational documentation stubs
+### TASK-003: Create operational documentation stubs — ✅ Complete
 - **Goal:** Keep architecture and implementation decisions discoverable.
 - **Steps:**
   1. Add `docs/architecture.md`.
@@ -34,7 +83,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 2: Schemas and Point-in-Time Contracts
 
-### TASK-004: Define market bar schema
+### TASK-004: Define market bar schema — ✅ Complete
 - **Goal:** Represent OHLCV bars with availability metadata.
 - **Steps:**
   1. Create `MarketBar` with symbol, bar start/end, open, high, low, close, volume, optional VWAP, and `available_at`.
@@ -42,7 +91,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Require `available_at >= bar_end`.
 - **Acceptance criteria:** Invalid prices, invalid volume, and impossible availability timestamps fail validation.
 
-### TASK-005: Define quote schema
+### TASK-005: Define quote schema — ✅ Complete
 - **Goal:** Represent bid/ask quotes and spread helpers.
 - **Steps:**
   1. Create `QuoteBar` with symbol, timestamp, bid, ask, sizes, and `available_at`.
@@ -50,7 +99,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Reject crossed markets unless a future configuration explicitly allows them.
 - **Acceptance criteria:** Valid quotes compute mid/spread; crossed quotes fail by default.
 
-### TASK-006: Define raw news item schema
+### TASK-006: Define raw news item schema — ✅ Complete
 - **Goal:** Capture raw incoming news before event extraction.
 - **Steps:**
   1. Create `RawNewsItem` with source, headline, body, URL, language, and timestamp fields.
@@ -58,7 +107,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Require at least a headline or body.
 - **Acceptance criteria:** Raw news preserves all point-in-time timestamps and validates required text.
 
-### TASK-007: Define ex-ante event object schema
+### TASK-007: Define ex-ante event object schema — ✅ Complete
 - **Goal:** Represent structured news/event claims that may enter live features.
 - **Steps:**
   1. Create `EventObject` with entity, claim, context type, event type, affected metrics, scores, horizon, and evidence.
@@ -67,7 +116,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   4. Forbid ex-post outcome fields on the ex-ante object.
 - **Acceptance criteria:** Schema validation enforces bounded scores and keeps ex-post outcomes separate.
 
-### TASK-008: Define ex-post event outcome schema
+### TASK-008: Define ex-post event outcome schema — ✅ Complete
 - **Goal:** Store event-study results for training, calibration, and audit only.
 - **Steps:**
   1. Create `EventOutcome` with abnormal returns at 5m, 15m, 60m, and 1d.
@@ -75,7 +124,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Link outcomes to `event_id`.
 - **Acceptance criteria:** Outcomes are serializable and explicitly excluded from live feature payloads.
 
-### TASK-009: Define feature row and label schemas
+### TASK-009: Define feature row and label schemas — ✅ Complete
 - **Goal:** Standardize model inputs and labels.
 - **Steps:**
   1. Create `FeatureRow` with symbol, decision time, component feature maps, masks, and validity flag.
@@ -83,7 +132,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Create triple-barrier label schema with barriers, touch time, class, and label window.
 - **Acceptance criteria:** Labels preserve `label_start` and `label_end` for purged validation.
 
-### TASK-010: Implement point-in-time validity utilities
+### TASK-010: Implement point-in-time validity utilities — ✅ Complete
 - **Goal:** Enforce `available_at <= decision_time` everywhere.
 - **Steps:**
   1. Implement `is_point_in_time_valid(available_at, decision_time)`.
@@ -93,7 +142,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 3: Market and Context Features
 
-### TASK-011: Implement log-price selection
+### TASK-011: Implement log-price selection — ✅ Complete
 - **Goal:** Use mid-price when quotes are valid, otherwise close price.
 - **Steps:**
   1. Implement `compute_log_price(close, bid=None, ask=None)`.
@@ -101,7 +150,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Fall back to `log(close)` when quotes are missing.
 - **Acceptance criteria:** Non-positive prices fail, valid quotes use mid-price, and missing quotes use close.
 
-### TASK-012: Implement intraday market feature rows
+### TASK-012: Implement intraday market feature rows — ✅ Complete
 - **Goal:** Build one-minute market feature rows.
 - **Steps:**
   1. Compute 1m, 5m, and 15m log returns.
@@ -110,7 +159,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   4. Preserve `available_at` metadata.
 - **Acceptance criteria:** Rolling features use only historical rows and have stable column ordering.
 
-### TASK-013: Build rolling market tensor
+### TASK-013: Build rolling market tensor — ✅ Complete
 - **Goal:** Produce the intraday tensor `M_bar`.
 - **Steps:**
   1. Implement `build_market_tensor(feature_rows, lookback=180)`.
@@ -118,7 +167,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Keep an ordered feature-name list for downstream models.
 - **Acceptance criteria:** Tensor shape is `(180, m)` when enough history exists and never includes future rows.
 
-### TASK-014: Implement daily context features
+### TASK-014: Implement daily context features — ⏳ Pending
 - **Goal:** Add multi-day regime context.
 - **Steps:**
   1. Compute `r_1d`, `r_2d`, `r_5d`, and `r_20d`.
@@ -126,7 +175,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Compute opening gap, 20-day distance to high, and 20-day distance to low.
 - **Acceptance criteria:** Intraday decisions never use the same-day close unless it is already available.
 
-### TASK-015: Implement weekly and monthly context features
+### TASK-015: Implement weekly and monthly context features — ⏳ Pending
 - **Goal:** Add longer regime information.
 - **Steps:**
   1. Compute weekly returns and volatility with documented session conventions.
@@ -136,7 +185,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 4: Costs and Labels
 
-### TASK-016: Implement cost model
+### TASK-016: Implement cost model — ✅ Complete
 - **Goal:** Represent spread, fees, slippage, and expected impact.
 - **Steps:**
   1. Implement a base `CostModel`.
@@ -144,7 +193,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Return costs in return units.
 - **Acceptance criteria:** Larger size and volatility increase cost; larger volume lowers impact; costs are non-negative.
 
-### TASK-017: Implement fixed-horizon return labels
+### TASK-017: Implement fixed-horizon return labels — ✅ Complete
 - **Goal:** Compute future log returns for a chosen horizon.
 - **Steps:**
   1. Implement `make_future_returns(prices, horizon)`.
@@ -152,7 +201,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Drop rows with insufficient future data.
 - **Acceptance criteria:** Future data is used only for labels, not features, and label windows are recorded.
 
-### TASK-018: Implement fixed-horizon trading class labels
+### TASK-018: Implement fixed-horizon trading class labels — ✅ Complete
 - **Goal:** Convert future returns into long/no-trade/short classes.
 - **Steps:**
   1. Apply cost and volatility thresholds.
@@ -160,7 +209,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Store cost and threshold metadata.
 - **Acceptance criteria:** Threshold tests cover long, short, and no-trade cases.
 
-### TASK-019: Implement triple-barrier labels
+### TASK-019: Implement triple-barrier labels — ✅ Complete
 - **Goal:** Label first profit/loss barrier touch before vertical expiry.
 - **Steps:**
   1. Build upper and lower barriers from cost and volatility.
@@ -171,7 +220,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 5: Universe, Events, and State Tensors
 
-### TASK-020: Implement point-in-time tradable universe
+### TASK-020: Implement point-in-time tradable universe — ⏳ Pending
 - **Goal:** Avoid survivorship bias and today-universe leakage.
 - **Steps:**
   1. Define universe membership schema with symbol, start/end, tradable, observable, eligible, and reason.
@@ -179,7 +228,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Add tests for lifecycle changes.
 - **Acceptance criteria:** Only eligible symbols as of the decision time enter training rows.
 
-### TASK-021: Define event ontologies and rulebooks
+### TASK-021: Define event ontologies and rulebooks — ⏳ Pending
 - **Goal:** Make event tensorization repeatable.
 - **Steps:**
   1. Define context types: geopolitical, macro, earnings, fundamental, legal/regulatory, product, market-belief, and opinion.
@@ -187,7 +236,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Add decay, scoring, and contradiction-rule placeholders.
 - **Acceptance criteria:** Unknown event types or affected metrics fail validation unless explicitly mapped.
 
-### TASK-022: Implement manual event loader and extractor interface
+### TASK-022: Implement manual event loader and extractor interface — ⏳ Pending
 - **Goal:** Support structured events before adding LLM extraction.
 - **Steps:**
   1. Load event objects from JSON/CSV.
@@ -195,7 +244,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Define `EventExtractor.extract(raw_item)` interface.
 - **Acceptance criteria:** Manual events can be ingested, validated, and passed to state updates.
 
-### TASK-023: Implement staleness and deduplication
+### TASK-023: Implement staleness and deduplication — ⏳ Pending
 - **Goal:** Prevent repeated headlines from acting like independent evidence.
 - **Steps:**
   1. Normalize text for duplicate detection.
@@ -204,7 +253,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   4. Set novelty to `1 - stale_score`.
 - **Acceptance criteria:** Identical and near-duplicate stories receive low novelty and link to the original event.
 
-### TASK-024: Implement state tensor schema and update logic
+### TASK-024: Implement state tensor schema and update logic — ⏳ Pending
 - **Goal:** Maintain compressed event memory by entity and context.
 - **Steps:**
   1. Define `StateTensor` with entity, context, `asof_time`, feature map, active events, and reliability status.
@@ -213,7 +262,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   4. Scale updates by direction, magnitude, uncertainty, source quality, and novelty.
 - **Acceptance criteria:** Updates are deterministic and old/stale events contribute less.
 
-### TASK-025: Implement contradiction and reliability gates
+### TASK-025: Implement contradiction and reliability gates — ⏳ Pending
 - **Goal:** Keep unstable event tensors out of live model features.
 - **Steps:**
   1. Implement contradiction handling that increases uncertainty or reversal risk.
@@ -223,7 +272,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 6: Event Outcomes, Reaction, Belief, and Opinion
 
-### TASK-026: Implement event-study outcome table
+### TASK-026: Implement event-study outcome table — ⏳ Pending
 - **Goal:** Attach ex-post results after event windows close.
 - **Steps:**
   1. Compute abnormal returns at 5m, 15m, 60m, and 1d.
@@ -231,7 +280,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Compute reversal flag using a documented rule.
 - **Acceptance criteria:** Outcomes are available only after their windows close and never enter ex-ante feature rows.
 
-### TASK-027: Implement market reaction vectors
+### TASK-027: Implement market reaction vectors — ⏳ Pending
 - **Goal:** Measure observed reaction around events.
 - **Steps:**
   1. Define reaction-vector schema.
@@ -239,7 +288,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Support cross-asset reaction inputs when available.
 - **Acceptance criteria:** Reaction vectors are timestamped and point-in-time valid.
 
-### TASK-028: Implement Bayesian market-belief filter
+### TASK-028: Implement Bayesian market-belief filter — ⏳ Pending
 - **Goal:** Infer latent scenario distributions from news, reaction, and context.
 - **Steps:**
   1. Define scenario schema and belief-state schema.
@@ -247,7 +296,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Add reaction strength, uncertainty, horizon, and reversal-risk outputs.
 - **Acceptance criteria:** Probabilities sum to one, strong evidence shifts beliefs, and zero-likelihood edge cases are handled.
 
-### TASK-029: Implement user opinion and disagreement layer
+### TASK-029: Implement user opinion and disagreement layer — ⏳ Pending
 - **Goal:** Represent opinion as a calibrated risk overlay, not truth.
 - **Steps:**
   1. Define user-opinion schema with scenario probabilities and confidence.
@@ -258,7 +307,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 7: Tensor Builder, Models, Calibration, and Execution
 
-### TASK-030: Build complete feature payload
+### TASK-030: Build complete feature payload — ⏳ Pending
 - **Goal:** Assemble the full model input state.
 - **Steps:**
   1. Combine market tensor, context vector, state tensors, recent events, belief state, and disagreement state.
@@ -266,7 +315,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Provide both flattened tabular output and sequence-tensor output.
 - **Acceptance criteria:** Complete feature payloads are point-in-time valid and have stable feature names/order.
 
-### TASK-031: Implement baseline models
+### TASK-031: Implement baseline models — ⏳ Pending
 - **Goal:** Establish simple leakage-sensitive baselines.
 - **Steps:**
   1. Implement ridge regression for return prediction.
@@ -274,7 +323,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Implement no-trade and random baselines.
 - **Acceptance criteria:** Baselines train, predict, and produce comparable metrics.
 
-### TASK-032: Implement GBM model wrappers
+### TASK-032: Implement GBM model wrappers — ⏳ Pending
 - **Goal:** Add the first serious tabular model family.
 - **Steps:**
   1. Implement LightGBM wrapper if available.
@@ -283,7 +332,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   4. Expose feature importance where supported.
 - **Acceptance criteria:** Model interface supports fit, predict, predict_proba, save, and load.
 
-### TASK-033: Implement probability calibration
+### TASK-033: Implement probability calibration — ⏳ Pending
 - **Goal:** Convert raw model probabilities into better-calibrated probabilities.
 - **Steps:**
   1. Implement temperature scaling stub or wrapper.
@@ -291,7 +340,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Compute Brier score, log loss, expected calibration error, and reliability bins.
 - **Acceptance criteria:** Calibration fits only on validation data and reports per-fold calibration metrics.
 
-### TASK-034: Implement execution policy and expected value layer
+### TASK-034: Implement execution policy and expected value layer — ⏳ Pending
 - **Goal:** Separate model prediction from trade sizing and cost-aware decisioning.
 - **Steps:**
   1. Compute expected value from calibrated probabilities and estimated gain/loss.
@@ -301,7 +350,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 8: Validation, Experiment Governance, and Ablation
 
-### TASK-035: Implement walk-forward splitter
+### TASK-035: Implement walk-forward splitter — ⏳ Pending
 - **Goal:** Use chronological validation rather than random splits.
 - **Steps:**
   1. Implement rolling and expanding train windows.
@@ -309,7 +358,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Ensure train period always precedes validation/test period.
 - **Acceptance criteria:** Generated folds are chronological and reproducible.
 
-### TASK-036: Implement purging and embargo
+### TASK-036: Implement purging and embargo — ⏳ Pending
 - **Goal:** Reduce leakage from overlapping label windows.
 - **Steps:**
   1. Remove training rows whose label windows overlap test windows.
@@ -317,7 +366,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Use label start/end metadata.
 - **Acceptance criteria:** Overlapping and embargoed rows are removed from training folds.
 
-### TASK-037: Implement validation runner and metrics
+### TASK-037: Implement validation runner and metrics — ⏳ Pending
 - **Goal:** Run full train/evaluate cycles after costs.
 - **Steps:**
   1. Train models per fold.
@@ -325,7 +374,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Report gross return, net return, turnover, costs, max drawdown, hit rate, and calibration.
 - **Acceptance criteria:** Fold-level and aggregate reports are generated and saved.
 
-### TASK-038: Implement experiment ledger
+### TASK-038: Implement experiment ledger — ⏳ Pending
 - **Goal:** Make every experiment reproducible and auditable.
 - **Steps:**
   1. Define experiment-record persistence to JSON.
@@ -333,7 +382,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Add config hashing and deterministic artifact paths.
 - **Acceptance criteria:** Every run writes a ledger record with reproducibility metadata.
 
-### TASK-039: Implement ablation framework
+### TASK-039: Implement ablation framework — ⏳ Pending
 - **Goal:** Prove each tensor family adds value after costs.
 - **Steps:**
   1. Add feature switches for market, context, event state, belief, and disagreement tensors.
@@ -341,7 +390,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Compute metric deltas by fold and aggregate.
 - **Acceptance criteria:** Ablation report identifies which tensor families improve or harm performance.
 
-### TASK-040: Add anti-overfit controls
+### TASK-040: Add anti-overfit controls — ⏳ Pending
 - **Goal:** Track strategy search and selection-bias risk.
 - **Steps:**
   1. Log number of model/config trials.
@@ -351,7 +400,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
 
 ## Milestone 9: CLI, Examples, and Future Neural Models
 
-### TASK-041: Add CLI entrypoint
+### TASK-041: Add CLI entrypoint — ⏳ Pending
 - **Goal:** Make workflows runnable from the command line.
 - **Steps:**
   1. Add commands for build-features, make-labels, train, validate, and ablate.
@@ -359,7 +408,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   3. Provide helpful errors and `--help` output.
 - **Acceptance criteria:** CLI commands can be invoked and route to the correct workflow functions.
 
-### TASK-042: Add example scripts
+### TASK-042: Add example scripts — ⏳ Pending
 - **Goal:** Provide runnable examples for the MVP pipeline.
 - **Steps:**
   1. Add `examples/build_features.py`.
@@ -368,7 +417,7 @@ This backlog turns the architecture report into implementation tasks. Tasks are 
   4. Add minimal synthetic/sample data fixtures if real data is unavailable.
 - **Acceptance criteria:** Examples run end-to-end on test data and write outputs.
 
-### TASK-043: Implement optional neural sequence encoders
+### TASK-043: Implement optional neural sequence encoders — ⏳ Pending
 - **Goal:** Add CNN/GRU fusion only after tabular pipeline is validated.
 - **Steps:**
   1. Implement market sequence CNN encoder.
